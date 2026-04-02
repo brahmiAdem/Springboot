@@ -12,4 +12,8 @@ public interface IBlocService {
     void deleteBloc(long idBloc);
     List<Bloc> findAllBlocs();
     Bloc findBloc(long idBloc);
+    List<Bloc> findBlocsSansFoyer();
+    List<Bloc> findBlocsByCapaciteGreaterThan(Long capacite);
+    List<Bloc> findBlocsByNomBlocStartsWith(String prefix);
+    List<Bloc> findBlocsByNomBlocStartsWithAndCapaciteGreaterThan(String prefix, Long capacite);
 }

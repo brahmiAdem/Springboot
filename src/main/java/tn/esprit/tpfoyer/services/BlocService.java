@@ -64,5 +64,24 @@ public class BlocService implements IBlocService{
                 .orElseThrow(() -> new RuntimeException("Bloc introuvable id=" + idBloc));
         bloc.setFoyer(null);
         return blocRepository.save(bloc);
-}
+    }
+    @Override
+    public List<Bloc> findBlocsSansFoyer() {
+        return blocRepository.findByFoyerIsNull();
+    }
+
+    @Override
+    public List<Bloc> findBlocsByCapaciteGreaterThan(Long capacite) {
+        return blocRepository.findByCapaciteBlocGreaterThan(capacite);
+    }
+
+    @Override
+    public List<Bloc> findBlocsByNomBlocStartsWith(String prefix) {
+        return blocRepository.findByNomBlocStartingWith(prefix);
+    }
+
+    @Override
+    public List<Bloc> findBlocsByNomBlocStartsWithAndCapaciteGreaterThan(String prefix, Long capacite) {
+        return blocRepository.findByNomBlocStartingWithAndCapaciteBlocGreaterThan(prefix, capacite);
+    }
 }

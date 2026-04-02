@@ -57,4 +57,25 @@ public class BlocController {
         return ResponseEntity.ok(blocService.desaffecterBlocDeFoyer(idBloc));
     }
 
+    @GetMapping("/sans-foyer")
+    public List<Bloc> getBlocsSansFoyer() {
+        return blocService.findBlocsSansFoyer();
+    }
+
+    @GetMapping("/capacite/{capacite}")
+    public List<Bloc> getBlocsByCapacite(@PathVariable Long capacite) {
+        return blocService.findBlocsByCapaciteGreaterThan(capacite);
+    }
+
+    @GetMapping("/nom-start/{prefix}")
+    public List<Bloc> getBlocsByNomStart(@PathVariable String prefix) {
+        return blocService.findBlocsByNomBlocStartsWith(prefix);
+    }
+
+    @GetMapping("/nom-start/{prefix}/capacite/{capacite}")
+    public List<Bloc> getBlocsByNomStartAndCapacite(@PathVariable String prefix,
+                                                    @PathVariable Long capacite) {
+        return blocService.findBlocsByNomBlocStartsWithAndCapaciteGreaterThan(prefix, capacite);
+    }
+
 }
