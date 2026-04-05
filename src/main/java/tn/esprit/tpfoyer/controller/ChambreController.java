@@ -14,6 +14,7 @@ import java.util.List;
 @RequestMapping("/chambre")
 @AllArgsConstructor
 public class ChambreController {
+
     private final IChambreService chambreService;
 
     @PostMapping("/add")
@@ -40,13 +41,13 @@ public class ChambreController {
     Chambre findChambreById(@PathVariable Long idChambre) {
         return chambreService.findChambre(idChambre);
     }
-    @PostMapping("/add-with-reservation")
-    public ResponseEntity<Chambre> addChambreWithReservation(
-            @RequestBody ChambreReservationRequest req) {
-        return ResponseEntity.ok(
-                chambreService.addChambreAndReservation(req.getChambre(), req.getReservation()));
-    }
 
+    @PostMapping("/add-with-reservation")
+    public ResponseEntity<Chambre> addChambreWithReservation(@RequestBody ChambreReservationRequest req) {
+        return ResponseEntity.ok(
+                chambreService.addChambreAndReservation(req.getChambre(), req.getReservation())
+        );
+    }
 
     @PutMapping("/reserver/{idChambre}/reservation/{idReservation}")
     public ResponseEntity<Chambre> reserverChambre(@PathVariable Long idChambre,
@@ -54,32 +55,42 @@ public class ChambreController {
         return ResponseEntity.ok(chambreService.reserverChambre(idChambre, idReservation));
     }
 
-
     @PutMapping("/annuler/{idChambre}/reservation/{idReservation}")
     public ResponseEntity<Chambre> annulerReservation(@PathVariable Long idChambre,
                                                       @PathVariable String idReservation) {
         return ResponseEntity.ok(chambreService.annulerReservation(idChambre, idReservation));
     }
+
+    @GetMapping("/type/{type}")
+    public List<Chambre> getByType(@PathVariable TypeChambre type) {
+        return chambreService.findByType(type);
+    }
+
+    @GetMapping("/numero/{numeroChambre}")
+    public List<Chambre> getByNumero(@PathVariable Long numeroChambre) {
+        return chambreService.findByNumero(numeroChambre);
+    }
+
     public static class ChambreReservationRequest {
         private Chambre chambre;
         private Reservation reservation;
 
         public ChambreReservationRequest() {}
 
-        public Chambre getChambre()             { return chambre; }
-        public Reservation getReservation()     { return reservation; }
-        public void setChambre(Chambre c)       { this.chambre = c; }
-        public void setReservation(Reservation r) { this.reservation = r; }
-    }
+        public Chambre getChambre() {
+            return chambre;
+        }
 
-    @GetMapping("/type/{typeC}")
-    public List<Chambre> getChambresByType(@PathVariable TypeChambre typeC) {
-        return chambreService.findChambresByType(typeC);
-    }
+        public Reservation getReservation() {
+            return reservation;
+        }
 
-    @GetMapping("/numero/{numeroChambre}")
-    public Chambre getChambreByNumero(@PathVariable Long numeroChambre) {
-        return chambreService.findChambreByNumero(numeroChambre);
-    }
+        public void setChambre(Chambre chambre) {
+            this.chambre = chambre;
+        }
 
+        public void setReservation(Reservation reservation) {
+            this.reservation = reservation;
+        }
+    }
 }

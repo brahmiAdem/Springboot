@@ -11,9 +11,11 @@ public interface IChambreService {
     void deleteChambre(long idChambre);
     List<Chambre> findAllChambres();
     Chambre findChambre(long idChambre);
+
     Chambre addChambreAndReservation(Chambre chambre, Reservation reservation);
     Chambre reserverChambre(Long idChambre, String idReservation);
     Chambre annulerReservation(Long idChambre, String idReservation);
-    List<Chambre> findChambresByType(TypeChambre typeC);
-    Chambre findChambreByNumero(Long numeroChambre);
+
+    List<Chambre> findByType(TypeChambre type);
+    List<Chambre> findByNumero(Long numero);
 }
