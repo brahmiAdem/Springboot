@@ -20,7 +20,7 @@ public class Bloc {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idBloc;
     String nomBloc;
-    String capaciteBloc;
+    Long capaciteBloc;
     @ManyToOne
     @JsonIgnore
     @ToString.Exclude

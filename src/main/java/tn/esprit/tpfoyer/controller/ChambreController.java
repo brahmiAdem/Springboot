@@ -93,4 +93,28 @@ public class ChambreController {
             this.reservation = reservation;
         }
     }
+
+
+
+    //jpql
+
+
+
+    @GetMapping("/jpql/type/{type}")
+    public List<Chambre> getChambresJPQL(@PathVariable TypeChambre type) {
+        return chambreService.getChambresByType(type);
+    }
+    
+    @GetMapping("/jpql/bloc/{idBloc}/valide")
+    public List<Chambre> getChambresValides(@PathVariable Long idBloc) {
+        return chambreService.getChambresValidesByBloc(idBloc);
+    }
+
+    @PutMapping("/jpql/update/{id}/{type}")
+    public String updateType(@PathVariable Long id,
+                             @PathVariable TypeChambre type) {
+
+        chambreService.updateType(id, type);
+        return "Updated successfully";
+    }
 }

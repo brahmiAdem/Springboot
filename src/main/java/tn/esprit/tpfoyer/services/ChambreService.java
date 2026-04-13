@@ -1,5 +1,6 @@
 package tn.esprit.tpfoyer.services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.tpfoyer.entities.Chambre;
@@ -92,5 +93,23 @@ public class ChambreService implements IChambreService {
     @Override
     public List<Chambre> findByNumero(Long numero) {
         return chambreRepository.findByNumeroChambre(numero);
+    }
+
+
+
+    //jpql
+
+   @Override
+    public List<Chambre> getChambresByType(TypeChambre type) {
+        return chambreRepository.findChambresByType(type);
+    }
+    @Override
+    public List<Chambre> getChambresValidesByBloc(Long idBloc) {
+        return chambreRepository.findChambresValidesByBloc(idBloc);
+    }
+
+    @Transactional
+    public int updateType(Long id, TypeChambre type) {
+        return chambreRepository.updateTypeChambre(type, id);
     }
 }

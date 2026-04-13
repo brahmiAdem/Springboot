@@ -18,4 +18,8 @@ public interface IChambreService {
 
     List<Chambre> findByType(TypeChambre type);
     List<Chambre> findByNumero(Long numero);
+//jpql
+    List<Chambre> getChambresByType(TypeChambre type);
+    List<Chambre> getChambresValidesByBloc(Long idBloc);
+    int updateType(Long id, TypeChambre type);
 }
