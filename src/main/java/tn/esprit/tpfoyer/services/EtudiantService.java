@@ -8,9 +8,11 @@ import tn.esprit.tpfoyer.repositories.EtudiantRepository;
 import java.util.List;
 
 @Service
-public class EtudiantService implements IEtudiantService{
+public class EtudiantService implements IEtudiantService {
+
     @Autowired
     EtudiantRepository etudiantRepository;
+
     @Override
     public Etudiant addOrUpdateEtudiant(Etudiant etudiant) {
         return etudiantRepository.save(etudiant);
@@ -29,5 +31,11 @@ public class EtudiantService implements IEtudiantService{
     @Override
     public Etudiant findEtudiant(long idEtudiant) {
         return etudiantRepository.findById(idEtudiant).orElse(null);
+    }
+
+    // JPQL
+    @Override
+    public List<Etudiant> getEtudiantsAboveAverageReservations() {
+        return etudiantRepository.findEtudiantsAboveAverageReservations();
     }
 }

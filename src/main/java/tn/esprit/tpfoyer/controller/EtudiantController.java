@@ -1,4 +1,5 @@
 package tn.esprit.tpfoyer.controller;
+
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.tpfoyer.entities.Etudiant;
@@ -10,6 +11,7 @@ import java.util.List;
 @RequestMapping("/etudiant")
 @AllArgsConstructor
 public class EtudiantController {
+
     private final IEtudiantService etudiantService;
 
     @PostMapping("/add")
@@ -35,5 +37,11 @@ public class EtudiantController {
     @GetMapping("/findById/{idEtudiant}")
     Etudiant findEtudiantById(@PathVariable Long idEtudiant) {
         return etudiantService.findEtudiant(idEtudiant);
+    }
+
+    // JPQL
+    @GetMapping("/jpql/above-average-reservations")
+    public List<Etudiant> getEtudiantsAboveAverageReservations() {
+        return etudiantService.getEtudiantsAboveAverageReservations();
     }
 }

@@ -9,4 +9,7 @@ public interface IEtudiantService {
     void deleteEtudiant(long idEtudiant);
     List<Etudiant> findAllEtudiants();
     Etudiant findEtudiant(long idEtudiant);
+
+    List<Etudiant> getEtudiantsAboveAverageReservations();
+
 }

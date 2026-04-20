@@ -1,6 +1,8 @@
 package tn.esprit.tpfoyer.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.esprit.tpfoyer.entities.Bloc;
 import tn.esprit.tpfoyer.entities.Foyer;
@@ -10,10 +12,12 @@ import tn.esprit.tpfoyer.repositories.FoyerRepository;
 import java.util.List;
 
 @Service
-public class BlocService implements IBlocService{
+@Slf4j
+public class BlocService implements IBlocService {
 
     @Autowired
     FoyerRepository foyerRepository;
+
     @Autowired
     BlocRepository blocRepository;
 
@@ -28,8 +32,15 @@ public class BlocService implements IBlocService{
     }
 
     @Override
+    @Scheduled(cron = "0 */10 9-17 * * TUE,FRI")
     public List<Bloc> findAllBlocs() {
-        return blocRepository.findAll();
+        List<Bloc> blocs = blocRepository.findAll();
+
+        log.info("=== Scheduler Blocs ===");
+        blocs.forEach(bloc -> log.info("Bloc -> {}", bloc));
+        log.info("Total blocs: {}", blocs.size());
+
+        return blocs;
     }
 
     @Override
@@ -58,6 +69,7 @@ public class BlocService implements IBlocService{
         bloc.setFoyer(foyer);
         return blocRepository.save(bloc);
     }
+
     @Override
     public Bloc desaffecterBlocDeFoyer(Long idBloc) {
         Bloc bloc = blocRepository.findById(idBloc)
@@ -65,6 +77,7 @@ public class BlocService implements IBlocService{
         bloc.setFoyer(null);
         return blocRepository.save(bloc);
     }
+
     @Override
     public List<Bloc> findBlocsSansFoyer() {
         return blocRepository.findByFoyerIsNull();

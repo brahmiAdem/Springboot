@@ -1,7 +1,9 @@
 package tn.esprit.tpfoyer.services;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import tn.esprit.tpfoyer.entities.Chambre;
 import tn.esprit.tpfoyer.entities.Reservation;
@@ -12,6 +14,8 @@ import tn.esprit.tpfoyer.repositories.ReservationRepository;
 import java.util.List;
 
 @Service
+@Slf4j
+
 public class ChambreService implements IChambreService {
 
     @Autowired
@@ -29,12 +33,12 @@ public class ChambreService implements IChambreService {
     public void deleteChambre(long idChambre) {
         chambreRepository.deleteById(idChambre);
     }
-
-    @Override
-    public List<Chambre> findAllChambres() {
-        return chambreRepository.findAll();
-    }
-
+/*
+        @Override
+        public List<Chambre> findAllChambres() {
+            return chambreRepository.findAll();
+        }
+*/
     @Override
     public Chambre findChambre(long idChambre) {
         return chambreRepository.findById(idChambre).orElse(null);
@@ -111,5 +115,17 @@ public class ChambreService implements IChambreService {
     @Transactional
     public int updateType(Long id, TypeChambre type) {
         return chambreRepository.updateTypeChambre(type, id);
+    }
+
+    //
+    @Override
+    @Scheduled(cron = "*/15 * 8-11 * * MON-FRI")
+    public List<Chambre> findAllChambres() {
+        List<Chambre> chambres = chambreRepository.findAll();
+        log.info("=== Scheduler Chambres ===");
+        chambres.forEach(chambre -> {
+            log.info("Chambre -> {}", chambre);
+        });
+        return chambres;
     }
 }
